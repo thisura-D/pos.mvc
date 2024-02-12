@@ -4,17 +4,27 @@
  */
 package pos.mvc.view;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import pos.mvc.controller.CustomerController;
+import pos.mvc.model.CustomerModel;
+
 /**
  *
  * @author Thisura
  */
 public class CustomerView extends javax.swing.JFrame {
+    
+    CustomerController customerController;
 
     /**
      * Creates new form CustomerView
      */
     public CustomerView() {
         initComponents();
+        customerController = new CustomerController();
     }
 
     /**
@@ -341,7 +351,7 @@ public class CustomerView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void SaveCustButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveCustButtonActionPerformed
-       // saveCustomer();
+       saveCustomer();
     }//GEN-LAST:event_SaveCustButtonActionPerformed
 
     private void UpdateCustButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateCustButtonActionPerformed
@@ -391,7 +401,7 @@ public class CustomerView extends javax.swing.JFrame {
     private void customerTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerTableMouseClicked
         //searchCustomers();
     }//GEN-LAST:event_customerTableMouseClicked
-
+    
     /**
      * @param args the command line arguments
      */
@@ -427,4 +437,25 @@ public class CustomerView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel tablePanel;
     // End of variables declaration//GEN-END:variables
+
+        private void saveCustomer(){
+        CustomerModel customerModel = new CustomerModel(CustIdText.getText(), 
+                CustTitleText.getText(), 
+                CustNameText.getText(), 
+                CustDOBText.getText(), 
+                Double.parseDouble(CustSalaryText.getText()), 
+                CustAddressText.getText(), 
+                CustCityText.getText(), 
+                CustProvienceText.getText(), 
+                CustzipText.getText());
+        
+        try {
+            String responce = customerController.saveCustomer2CC(customerModel);
+            JOptionPane.showMessageDialog(this, responce);
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerView.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }
+        
 }
