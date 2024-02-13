@@ -363,7 +363,7 @@ public class CustomerView extends javax.swing.JFrame {
     }//GEN-LAST:event_UpdateCustButtonActionPerformed
 
     private void DeleteCustButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteCustButtonActionPerformed
-        // deleteCustomer();
+         deleteCustomer();
     }//GEN-LAST:event_DeleteCustButtonActionPerformed
 
     private void CustIdTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustIdTextActionPerformed
@@ -453,8 +453,8 @@ public class CustomerView extends javax.swing.JFrame {
                 CustzipText.getText());
 
         try {
-            String responce = customerController.saveCustomer2CC(customerModel);
-            JOptionPane.showMessageDialog(this, responce);
+            String response = customerController.saveCustomer2CC(customerModel);
+            JOptionPane.showMessageDialog(this, response);
             clear();
             loadAllCustomers();
         } catch (SQLException ex) {
@@ -543,8 +543,8 @@ public class CustomerView extends javax.swing.JFrame {
                 CustzipText.getText());
         
         try {
-            String responce = customerController.updateCustomer2CC(customerModel);
-            JOptionPane.showMessageDialog(this, responce);
+            String response = customerController.updateCustomer2CC(customerModel);
+            JOptionPane.showMessageDialog(this, response);
             clear();
             loadAllCustomers();
         } catch (SQLException ex) {
@@ -553,4 +553,19 @@ public class CustomerView extends javax.swing.JFrame {
         }
     
 }
+
+    private void deleteCustomer() {
+        
+        String custID = CustIdText.getText();
+        
+        try {
+            String response = customerController.deleteCustomer(custID);
+            JOptionPane.showMessageDialog(this, response);
+            clear();
+            loadAllCustomers();
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        }
 }
