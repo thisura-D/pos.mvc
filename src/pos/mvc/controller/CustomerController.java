@@ -70,4 +70,56 @@ public class CustomerController {
         }
         return customerModels;
     }
+    
+    public CustomerModel searchCustomer2CC(String custID) throws SQLException{
+    
+        Connection connection = DBconnection.getInstance().getConnection();
+
+        String query = "SELECT * FROM Customer WHERE CustID = ?";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, custID);
+        
+        ResultSet resultSet = preparedStatement.executeQuery();
+        
+        while(resultSet.next()){
+            CustomerModel cm = new CustomerModel(resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getDouble(5),
+                    resultSet.getString(6),
+                    resultSet.getString(7),
+                    resultSet.getString(8),
+                    resultSet.getString(9));
+            
+            return cm;
+        }
+        
+        return null;
+    }
+    
+    public String updateCustomer2CC(CustomerModel customerModel) throws SQLException{
+        Connection connection = DBconnection.getInstance().getConnection();
+
+        String query = "UPDATE Customer SET CustTitle=?, CustName=?, DOB=?, salary=?, CustAddress=?, City =?, Province =?, PostalCode=? WHERE CustID = ?  ";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(9, customerModel.getCustID());
+        preparedStatement.setString(1, customerModel.getTitle());
+        preparedStatement.setString(2, customerModel.getName());
+        preparedStatement.setString(3, customerModel.getDate());
+
+        preparedStatement.setDouble(4, customerModel.getSalary());
+        preparedStatement.setString(5, customerModel.getAddress());
+        preparedStatement.setString(6, customerModel.getCity());
+        preparedStatement.setString(7, customerModel.getProvince());
+        preparedStatement.setString(8, customerModel.getZip());
+        
+        if (preparedStatement.executeUpdate() > 0) {
+            return "Success";
+        } else {
+            return "Fail";
+        }
+    }
 }
