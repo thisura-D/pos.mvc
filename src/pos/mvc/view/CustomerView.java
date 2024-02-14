@@ -565,6 +565,7 @@ public class CustomerView extends javax.swing.JFrame {
             loadAllCustomers();
         } catch (SQLException ex) {
             Logger.getLogger(CustomerView.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
         
         }
